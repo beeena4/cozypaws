@@ -1,40 +1,53 @@
+import 'package:belajarflutter/screens/service_screen.dart';
 import 'package:flutter/material.dart';
 import '../models/service_data.dart';
 import '../models/service.dart';
 import 'detail.screens.dart';
+import 'profile_screen.dart'; 
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   final String userNameOrEmail;
 
   const HomeScreen({super.key, required this.userNameOrEmail});
 
-  void _searchService(BuildContext context, String query, List<Service> services) {
-    final results = services.where((service) =>
-      service.name.toLowerCase().contains(query.toLowerCase()) ||
-      service.description.toLowerCase().contains(query.toLowerCase())
-    ).toList();
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  int _selectedIndex = 0;
+
+  void _searchService(
+    BuildContext context,
+    String query,
+    List<Service> services,
+  ) {
+    final results = services
+        .where(
+          (service) =>
+              service.name.toLowerCase().contains(query.toLowerCase()) ||
+              service.description.toLowerCase().contains(query.toLowerCase()),
+        )
+        .toList();
 
     if (results.isNotEmpty) {
       final match = results.first;
       Navigator.push(
         context,
-        MaterialPageRoute(
-          builder: (context) => DetailScreens(service: match),
-        ),
+        MaterialPageRoute(builder: (context) => DetailScreens(service: match)),
       );
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Layanan tidak ditemukan")),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text("Layanan tidak ditemukan")));
     }
   }
 
-  @override
-  Widget build(BuildContext context) {
-    final List<Service> services = ServiceData.getServices();
-
-    return Scaffold(
-      body: SingleChildScrollView(
+  // 🔹 Halaman untuk tiap menu bottom nav
+  Widget _buildPage(int index) {
+    if (index == 0) {
+      final List<Service> services = ServiceData.getServices();
+      return SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -57,7 +70,7 @@ class HomeScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Hai, $userNameOrEmail",
+                    "Hai, ${widget.userNameOrEmail}",
                     style: const TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
@@ -67,10 +80,7 @@ class HomeScreen extends StatelessWidget {
                   const SizedBox(height: 6),
                   const Text(
                     "Meowcome di Cozypaws!",
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.white70,
-                    ),
+                    style: TextStyle(fontSize: 16, color: Colors.white70),
                   ),
                   const SizedBox(height: 20),
 
@@ -104,6 +114,7 @@ class HomeScreen extends StatelessWidget {
             ),
 
             const SizedBox(height: 16),
+            
 
             // List layanan
             ListView.builder(
@@ -130,8 +141,11 @@ class HomeScreen extends StatelessWidget {
                         height: 100,
                         fit: BoxFit.cover,
                         errorBuilder: (context, error, stackTrace) =>
-                            const Icon(Icons.image_not_supported,
-                                size: 40, color: Colors.grey),
+                            const Icon(
+                              Icons.image_not_supported,
+                              size: 40,
+                              color: Colors.grey,
+                            ),
                       ),
                     ),
                     title: Text(
@@ -146,10 +160,7 @@ class HomeScreen extends StatelessWidget {
                       service.description,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(
-                        fontSize: 12,
-                        color: Colors.black,
-                      ),
+                      style: const TextStyle(fontSize: 12, color: Colors.black),
                     ),
                     trailing: Text(
                       "Mulai dari\n${service.getDisplayPrice()}",
@@ -173,6 +184,39 @@ class HomeScreen extends StatelessWidget {
             ),
           ],
         ),
+      );
+      
+    } else if (index == 1) {
+      return const ServiceScreen();
+    } else {
+     // Tampilkan ProfileScreen
+      return ProfileScreen(email: widget.userNameOrEmail);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: _buildPage(_selectedIndex),
+      bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Colors.white,
+        elevation: 20,
+        currentIndex: _selectedIndex,
+        selectedItemColor: Colors.purple,
+        unselectedItemColor: Colors.grey,
+        iconSize: 20,
+        selectedLabelStyle: const TextStyle(fontSize: 11),
+        unselectedLabelStyle: const TextStyle(fontSize: 10),
+        onTap: (index) {
+          setState(() {
+            _selectedIndex = index;
+          });
+        },
+        items: const [
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
+          BottomNavigationBarItem(icon: Icon(Icons.pets), label: "Service"),
+          BottomNavigationBarItem(icon: Icon(Icons.person), label: "Account"),
+        ],
       ),
     );
   }
