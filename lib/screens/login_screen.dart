@@ -189,7 +189,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                         const SizedBox(height: 24),
 
-                        // Ingat Saya + Lupa Password
+                        // Ingat Saya dan Lupa Password
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -263,37 +263,6 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                         const SizedBox(height: 24),
 
-                        // teks "atau login dengan"
-                        Row(
-                          children: const [
-                            Expanded(child: Divider(thickness: 1)),
-                            Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 8),
-                              child: Text("atau login dengan"),
-                            ),
-                            Expanded(child: Divider(thickness: 1)),
-                          ],
-                        ),
-                        const SizedBox(height: 18),
-
-                        Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          _buildSocialButton(
-                            "https://cdn-icons-png.flaticon.com/512/0/747.png", // Apple
-                          ),
-                          const SizedBox(width: 16),
-                          _buildSocialButton(
-                            "https://cdn-icons-png.flaticon.com/512/281/281764.png", // Google
-                          ),
-                          const SizedBox(width: 16),
-                          _buildSocialButton(
-                            "https://cdn-icons-png.flaticon.com/512/733/733547.png", // Facebook
-                          ),
-                        ],
-                      ),
-
-                      const SizedBox(height: 18),
 
                         // Sign Up
                         Row(
@@ -330,27 +299,6 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
     );
   }
-}
-
-// Contoh fungsi social button
-Widget _buildSocialButton(String imageUrl) {
-  return Container(
-    width: 50,
-    height: 50,
-    decoration: BoxDecoration(
-      shape: BoxShape.circle,
-    ),
-    child: Center(
-      child: Image.network(
-        imageUrl,
-        width: 24,
-        height: 24,
-        errorBuilder: (context, error, stackTrace) {
-          return const Icon(Icons.error, color: Colors.red);
-        },
-      ),
-    ),
-  );
 }
 
 //  Clipper untuk header melengkung

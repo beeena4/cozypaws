@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
         colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF7E57C2)),
       ),
-      // SplashScreen tetap jadi halaman awal
+     
       home: const SplashScreen(),
       routes: {
         '/login': (context) => const LoginScreen(),

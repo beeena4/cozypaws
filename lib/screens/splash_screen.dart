@@ -36,7 +36,7 @@ class _SplashScreenState extends State<SplashScreen>
 
     _logoController.forward();
 
-    // Pindah ke Login setelah 3 detik
+    // Pindah ke Login setelah 5 detik
     Timer(const Duration(seconds: 5), () {
       Navigator.pushReplacement(
         context,
