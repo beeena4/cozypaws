@@ -67,7 +67,7 @@ class DetailScreens extends StatelessWidget {
                       style: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
-                        color: Colors.white, // 🔹 jelas di atas gambar
+                        color: Colors.white, 
                         shadows: [
                           Shadow(
                               offset: Offset(1, 1),
@@ -89,7 +89,7 @@ class DetailScreens extends StatelessWidget {
 
               // List paket
               ListView.builder(
-                shrinkWrap: true, // supaya muat di scroll
+                shrinkWrap: true, 
                 physics: const NeverScrollableScrollPhysics(),
                 itemCount: service.packages.length,
                 itemBuilder: (context, index) {

@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'login_screen.dart'; // ganti ke login_screen.dart
+import 'login_screen.dart'; 
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -36,7 +36,7 @@ class _SplashScreenState extends State<SplashScreen>
 
     _logoController.forward();
 
-    // Pindah ke Login setelah 5 detik
+    // Pindah ke halaman Login setelah 5 detik
     Timer(const Duration(seconds: 5), () {
       Navigator.pushReplacement(
         context,
@@ -87,10 +87,9 @@ class _SplashScreenState extends State<SplashScreen>
                 child: const Text(
                   "Meowcome, Pawdiees",
                   textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
+                  style: TextStyle(fontSize: 15,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
                   ),
                 ),
               ),
@@ -102,17 +101,16 @@ class _SplashScreenState extends State<SplashScreen>
                 child: const Text(
                   "by : B_006_FEBRIANA N.A",
                   textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 8,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
+                  style: TextStyle(fontSize: 8,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
                   ),
                 ),
               ),
 
               const SizedBox(height: 20),
 
-              // Loading biasa
+              // Loading 
               const CircularProgressIndicator(
                 valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
               ),

@@ -28,7 +28,6 @@ flutter:
     - assets/images/boarding.png
     - assets/images/vaksin.png
     - assets/images/antarjemput.png
-    - assets/icons/
     
 
   fonts:

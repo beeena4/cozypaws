@@ -43,7 +43,7 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
-  // 🔹 Halaman untuk tiap menu bottom nav
+  // Halaman untuk tiap menu bottom nav
   Widget _buildPage(int index) {
     if (index == 0) {
       final List<Service> services = ServiceData.getServices();

@@ -170,12 +170,13 @@ class _OrderScreenState extends State<OrderScreen> {
                           SnackBar(
                             backgroundColor: Colors.purple,
                             content: Text(
-                                "Pesanan ${widget.packageName} berhasil!\nPemilik: ${_ownerController.text}, Kucing: ${_catNameController.text}, Tanggal: ${_selectedDate!.day}-${_selectedDate!.month}-${_selectedDate!.year}"),
+                                "Pesanan ${widget.packageName} berhasil!\nPemilik: ${_ownerController.text},Kucing: ${_catNameController.text}, Tanggal: ${_selectedDate!.day}-${_selectedDate!.month}-${_selectedDate!.year}"),
                           ),
                         );
                       } else {
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(
+                            backgroundColor: Colors.purple,
                               content:
                                   Text("Lengkapi semua data sebelum konfirmasi")),
                         );

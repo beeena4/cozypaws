@@ -1,7 +1,6 @@
 import 'service_packages.dart';
 
 class Service {
-  // Ubah properti dari final menjadi privat (dengan _)
   final String _id;
   String _name;
   double _price;
