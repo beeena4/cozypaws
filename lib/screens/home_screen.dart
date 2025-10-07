@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../models/service_data.dart';
 import '../models/service.dart';
 import 'detail.screens.dart';
-import 'profile_screen.dart'; 
+import 'profile_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   final String userNameOrEmail;
@@ -114,7 +114,6 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
 
             const SizedBox(height: 16),
-            
 
             // List layanan
             ListView.builder(
@@ -185,11 +184,10 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
       );
-      
     } else if (index == 1) {
       return const ServiceScreen();
     } else {
-     // Tampilkan ProfileScreen
+      // Tampilkan ProfileScreen
       return ProfileScreen(email: widget.userNameOrEmail);
     }
   }

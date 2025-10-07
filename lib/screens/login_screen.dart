@@ -3,6 +3,7 @@ import '../services/auth_service.dart';
 import 'signup_screen.dart';
 import 'home_screen.dart';
 import 'forgotpassword_screen.dart';
+import 'package:getwidget/getwidget.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -262,6 +263,47 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                         const SizedBox(height: 24),
 
+                        const Text(
+                          "- atau login dengan -",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 13,
+                            color: Colors.grey,
+                          ),
+                        ),
+
+                         const SizedBox(height: 24),
+                        
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center, 
+                          children: [
+                            GFIconButton(
+                              onPressed: () {},
+                              icon: Icon(Icons.facebook),
+                              size: GFSize.SMALL,
+                              shape: GFIconButtonShape.circle,
+                              color: Colors.purple,
+                            ),
+                            SizedBox(width: 8), 
+                            GFIconButton(
+                              onPressed: () {},
+                              icon: Icon(Icons.apple),
+                              size: GFSize.SMALL,
+                              shape: GFIconButtonShape.circle,
+                              color: Colors.purple,
+                            ),
+                            SizedBox(width: 8),
+                            GFIconButton(
+                              onPressed: () {},
+                              icon: Icon(Icons.g_mobiledata),
+                              size: GFSize.SMALL,
+                              shape: GFIconButtonShape.circle,
+                              color: Colors.purple,
+                            ),
+                          ],
+                        ),
+
+                        const SizedBox(height: 24),
 
                         // Sign Up
                         Row(

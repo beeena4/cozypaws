@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'login_screen.dart'; 
+import 'login_screen.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -55,6 +56,8 @@ class _SplashScreenState extends State<SplashScreen>
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
+        width: double.infinity,
+        height: double.infinity,
         decoration: const BoxDecoration(
           gradient: LinearGradient(
             colors: [Color(0xFFF48FB1), Color(0xFF7E57C2)],
@@ -62,12 +65,10 @@ class _SplashScreenState extends State<SplashScreen>
             end: Alignment.bottomRight,
           ),
         ),
-        child: Center(
+        child: SafeArea(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const SizedBox(height: 80),
-
               // Logo dengan Fade + Scale
               FadeTransition(
                 opacity: _fadeAnimation,
@@ -75,44 +76,47 @@ class _SplashScreenState extends State<SplashScreen>
                   scale: _scaleAnimation,
                   child: Image.asset(
                     "assets/images/COZY.png",
-                    width: 300,
-                    height: 300,
+                    width: 250,
+                    height: 250,
                   ),
                 ),
               ),
 
-              const SizedBox(height: 80),
+              const SizedBox(height: 60),
+
               FadeTransition(
                 opacity: _fadeAnimation,
                 child: const Text(
                   "Meowcome, Pawdiees",
                   textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 15,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
                   ),
                 ),
               ),
 
-              const SizedBox(height: 5),    
+              const SizedBox(height: 5),
 
               FadeTransition(
                 opacity: _fadeAnimation,
                 child: const Text(
                   "by : B_006_FEBRIANA N.A",
                   textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 8,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
+                  style: TextStyle(
+                    fontSize: 10,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
                   ),
                 ),
               ),
 
               const SizedBox(height: 20),
 
-              // Loading 
-              const CircularProgressIndicator(
-                valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+              LoadingAnimationWidget.staggeredDotsWave(
+                color: Colors.white,
+                size: 40, 
               ),
             ],
           ),

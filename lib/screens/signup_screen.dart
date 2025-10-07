@@ -284,7 +284,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               "Login",
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
-                                color: Colors.black),
+                                color: Color.fromARGB(255, 139, 57, 247),),
                             ),
                           ),
                         ],

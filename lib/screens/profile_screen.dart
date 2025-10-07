@@ -88,13 +88,8 @@ class ProfileScreen extends StatelessWidget {
                       borderRadius: BorderRadius.circular(12),
                     ),
                     elevation: 3,
-                    child: const ListTile(
-                      leading: Icon(Icons.calendar_today, color: Colors.purple),
-                      title: Text("Tanggal Bergabung"),
-                      subtitle: Text("22 September 2025"),
-                    ),
                   ),
-                  const SizedBox(height: 12),
+                  const SizedBox(height: 4),
                   Card(
                     color: Colors.white,
                     shape: RoundedRectangleBorder(
@@ -113,7 +108,7 @@ class ProfileScreen extends StatelessWidget {
                   Center(
                     child: Container(
                       width: 150,
-                      height: 50, // tidak terlalu melebar
+                      height: 50,
                       decoration: BoxDecoration(
                         gradient: const LinearGradient(
                           colors: [Color(0xFFF48FB1), Color(0xFF7E57C2)],
