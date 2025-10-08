@@ -69,7 +69,7 @@ class _SplashScreenState extends State<SplashScreen>
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              // Logo dengan Fade + Scale
+             
               FadeTransition(
                 opacity: _fadeAnimation,
                 child: ScaleTransition(
