@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../models/service.dart';
 import '../models/service_packages.dart';
 import 'order_screen.dart'; 
+import '../utils/format_utils.dart';
 
 class DetailScreens extends StatelessWidget {
   final Service service;
@@ -13,8 +14,9 @@ class DetailScreens extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           service.name,
-          style: const TextStyle(color: Colors.white),
+          style: const TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold)
         ),
+        centerTitle: true,
         iconTheme: const IconThemeData(color: Colors.white),
         flexibleSpace: Container(
           decoration: const BoxDecoration(
@@ -26,13 +28,12 @@ class DetailScreens extends StatelessWidget {
           ),
         ),
       ),
-      body: SingleChildScrollView( // agar 1 page bisa scroll
+      body: SingleChildScrollView( 
         child: Padding(
           padding: const EdgeInsets.all(16),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Gambar dengan overlay deskripsi
               Stack(
                 children: [
                   ClipRRect(
@@ -65,7 +66,7 @@ class DetailScreens extends StatelessWidget {
                     child: Text(
                       service.description,
                       style: const TextStyle(
-                        fontSize: 16,
+                        fontSize: 14,
                         fontWeight: FontWeight.bold,
                         color: Colors.white, 
                         shadows: [
@@ -83,7 +84,7 @@ class DetailScreens extends StatelessWidget {
               const SizedBox(height: 16),
               const Text(
                 "Pilihan Paw-ket Spesial",
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.purple),
               ),
               const SizedBox(height: 8),
 
@@ -107,6 +108,7 @@ class DetailScreens extends StatelessWidget {
                         pkg.name,
                         style: const TextStyle(
                           color: Colors.purple,
+                          fontSize: 12,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -117,7 +119,15 @@ class DetailScreens extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               const Text("• ", style: TextStyle(fontSize: 14)),
-                              Expanded(child: Text(facility)),
+                              Expanded(
+                              child: Text(
+                                facility,
+                                style: const TextStyle(
+                                  fontSize: 11, 
+                                  color: Colors.black87,
+                                ),
+                              ),
+                            ),
                             ],
                           );
                         }).toList(),
@@ -126,14 +136,16 @@ class DetailScreens extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            "Rp ${pkg.price}",
+                            FormatUtils.rupiah(pkg.price),
                             style: const TextStyle(
                               fontWeight: FontWeight.bold,
                               color: Colors.green,
                             ),
                           ),
                           const SizedBox(height: 6),
+
                           Container(
+                            height: 30, 
                             decoration: BoxDecoration(
                               gradient: const LinearGradient(
                                 colors: [Color(0xFFF48FB1), Color(0xFF7E57C2)],
@@ -157,7 +169,6 @@ class DetailScreens extends StatelessWidget {
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: Colors.transparent,
                                 shadowColor: Colors.transparent,
-                                minimumSize: const Size(70, 30),
                                 padding: EdgeInsets.zero,
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(8),
@@ -166,10 +177,13 @@ class DetailScreens extends StatelessWidget {
                               child: const Text(
                                 "Pesan",
                                 style: TextStyle(
-                                    fontSize: 12, color: Colors.white),
+                                  fontSize: 10,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white,
+                                ),
                               ),
                             ),
-                          ),
+                          )
                         ],
                       ),
                     ),

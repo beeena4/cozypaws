@@ -3,7 +3,6 @@ import '../services/auth_service.dart';
 import 'signup_screen.dart';
 import 'home_screen.dart';
 import 'forgotpassword_screen.dart';
-import 'package:getwidget/getwidget.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -70,11 +69,12 @@ class _LoginScreenState extends State<LoginScreen> {
             ClipPath(
               clipper: HeaderClipper(),
               child: Container(
-                height: 340,
+                height: 260,
                 decoration: const BoxDecoration(
                   gradient: LinearGradient(
-                  colors: [Color(0xFFF48FB1), Color(0xFF7E57C2)],
-                  begin: Alignment.topLeft,end: Alignment.bottomRight,
+                    colors: [Color(0xFFF48FB1), Color(0xFF7E57C2)],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
                   ),
                 ),
               ),
@@ -84,10 +84,10 @@ class _LoginScreenState extends State<LoginScreen> {
             Align(
               alignment: Alignment.topCenter,
               child: Padding(
-                padding: const EdgeInsets.only(top: 0),
+                padding: const EdgeInsets.only(top: 16),
                 child: Image.asset(
                   "assets/images/COZY.png",
-                  height: 240,
+                  height: 180,
                   fit: BoxFit.contain,
                 ),
               ),
@@ -97,7 +97,8 @@ class _LoginScreenState extends State<LoginScreen> {
             Align(
               alignment: Alignment.topCenter,
               child: Container(
-                margin: const EdgeInsets.only(top: 200, left: 40, right: 40, bottom: 40),
+                margin:
+                    const EdgeInsets.only(top: 180, left: 40, right: 40, bottom: 40),
                 padding: const EdgeInsets.fromLTRB(20, 40, 20, 40),
                 decoration: BoxDecoration(
                   color: Colors.white,
@@ -120,7 +121,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           "WELCOME BACK",
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                            fontSize: 22,
+                            fontSize: 18,
                             fontWeight: FontWeight.bold,
                             color: Color.fromARGB(135, 31, 0, 39),
                           ),
@@ -130,18 +131,25 @@ class _LoginScreenState extends State<LoginScreen> {
                           "Happy cats start here — Login now!!",
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                            fontSize: 16,
+                            fontSize: 14,
                             color: Color.fromARGB(135, 31, 0, 39),
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        const SizedBox(height: 40),
+                        const SizedBox(height: 20),
 
                         // Username / Email
                         TextFormField(
                           controller: emailOrNameController,
+                          style: const TextStyle(
+                            fontSize: 12,
+                          ),
                           decoration: InputDecoration(
                             hintText: "Username atau Email",
+                            hintStyle: const TextStyle(
+                              fontSize: 12, 
+                              color: Colors.grey,
+                            ),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(12),
                             ),
@@ -153,14 +161,21 @@ class _LoginScreenState extends State<LoginScreen> {
                             return null;
                           },
                         ),
-                        const SizedBox(height: 24),
+                        const SizedBox(height: 18),
 
                         // Password
                         TextFormField(
                           controller: passwordController,
                           obscureText: _obscurePassword,
+                          style: const TextStyle(
+                            fontSize: 12, 
+                          ),
                           decoration: InputDecoration(
                             hintText: "Password",
+                            hintStyle: const TextStyle(
+                              fontSize: 12, 
+                              color: Colors.grey,
+                            ),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(12),
                             ),
@@ -187,7 +202,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             return null;
                           },
                         ),
-                        const SizedBox(height: 24),
+                        const SizedBox(height: 18),
 
                         // Ingat Saya dan Lupa Password
                         Row(
@@ -203,7 +218,13 @@ class _LoginScreenState extends State<LoginScreen> {
                                     });
                                   },
                                 ),
-                                const Text("Ingat Saya"),
+                                const Text(
+                                  "Ingat Saya",
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    color: Colors.black,
+                                  ),
+                                ),
                               ],
                             ),
                             GestureDetector(
@@ -212,21 +233,21 @@ class _LoginScreenState extends State<LoginScreen> {
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) =>
-                                        const ForgotPasswordScreen(),
+                                        const ResetPasswordScreen(),
                                   ),
                                 );
                               },
                               child: const Text(
                                 "Lupa Password?",
                                 style: TextStyle(
-                                  color: Color.fromARGB(255, 139, 57, 247),
-                                  fontWeight: FontWeight.bold,
+                                  fontSize: 12,
+                                  color: Colors.deepPurple,
                                 ),
                               ),
                             ),
                           ],
                         ),
-                        const SizedBox(height: 24),
+                        const SizedBox(height: 8),
 
                         // Login Button (gradient)
                         Container(
@@ -235,7 +256,8 @@ class _LoginScreenState extends State<LoginScreen> {
                             gradient: LinearGradient(
                               colors: [Color(0xFFF48FB1), Color(0xFF7E57C2)],
                             ),
-                            borderRadius: BorderRadius.all(Radius.circular(30)),
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(30)),
                           ),
                           child: ElevatedButton(
                             onPressed: _isLoading ? null : _login,
@@ -246,7 +268,8 @@ class _LoginScreenState extends State<LoginScreen> {
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(30),
                               ),
-                              padding: const EdgeInsets.symmetric(vertical: 18),
+                              padding:
+                                  const EdgeInsets.symmetric(vertical: 12),
                             ),
                             child: _isLoading
                                 ? const CircularProgressIndicator(
@@ -255,74 +278,41 @@ class _LoginScreenState extends State<LoginScreen> {
                                 : const Text(
                                     "Log In",
                                     style: TextStyle(
-                                      fontSize: 16,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.bold,
                                       color: Colors.white,
                                     ),
                                   ),
                           ),
                         ),
-                        const SizedBox(height: 24),
 
-                        const Text(
-                          "- atau login dengan -",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: 13,
-                            color: Colors.grey,
-                          ),
-                        ),
-
-                         const SizedBox(height: 24),
-                        
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center, 
-                          children: [
-                            GFIconButton(
-                              onPressed: () {},
-                              icon: Icon(Icons.facebook),
-                              size: GFSize.SMALL,
-                              shape: GFIconButtonShape.circle,
-                              color: Colors.purple,
-                            ),
-                            SizedBox(width: 8), 
-                            GFIconButton(
-                              onPressed: () {},
-                              icon: Icon(Icons.apple),
-                              size: GFSize.SMALL,
-                              shape: GFIconButtonShape.circle,
-                              color: Colors.purple,
-                            ),
-                            SizedBox(width: 8),
-                            GFIconButton(
-                              onPressed: () {},
-                              icon: Icon(Icons.g_mobiledata),
-                              size: GFSize.SMALL,
-                              shape: GFIconButtonShape.circle,
-                              color: Colors.purple,
-                            ),
-                          ],
-                        ),
-
-                        const SizedBox(height: 24),
+                        const SizedBox(height: 20),
 
                         // Sign Up
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            const Text("Belum punya akun? "),
+                            const Text(
+                              "Belum punya akun? ",
+                              style: TextStyle(
+                                fontSize: 12,
+                              ),
+                            ),
                             GestureDetector(
                               onTap: () {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => const SignUpScreen(),
+                                    builder: (context) =>
+                                        const SignUpScreen(),
                                   ),
                                 );
                               },
                               child: const Text(
                                 "Daftar",
                                 style: TextStyle(
-                                  color: Color.fromARGB(255, 139, 57, 247),
+                                  fontSize: 12,
+                                  color: Colors.deepPurple,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),

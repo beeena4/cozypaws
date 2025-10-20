@@ -4,6 +4,8 @@ import '../models/service_data.dart';
 import '../models/service.dart';
 import 'detail.screens.dart';
 import 'profile_screen.dart';
+import 'package:getwidget/getwidget.dart';
+import '../utils/format_utils.dart';
 
 class HomeScreen extends StatefulWidget {
   final String userNameOrEmail;
@@ -16,6 +18,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 0;
+  String _selectedCategory = "Semua";
 
   void _searchService(
     BuildContext context,
@@ -43,10 +46,43 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
-  // Halaman untuk tiap menu bottom nav
   Widget _buildPage(int index) {
     if (index == 0) {
       final List<Service> services = ServiceData.getServices();
+
+      final List<String> categories = [
+        "Semua",
+        "Grooming",
+        "Boarding",
+        "Vaksinasi",
+        "Pick-up and Drop off",
+      ];
+
+      // Filter berdasarkan nama layanan
+      List<Service> filteredServices;
+      if (_selectedCategory == "Semua") {
+        filteredServices = services;
+      } else {
+        filteredServices = services.where((service) {
+          final name = service.name.toLowerCase();
+          if (_selectedCategory == "Grooming") {
+            return name.contains("grooming") || name.contains("potong");
+          } else if (_selectedCategory == "Boarding") {
+            return name.contains("titip") || name.contains("boarding");
+          } else if (_selectedCategory == "Vaksinasi") {
+            return name.contains("vaksin") ||
+                name.contains("dokter") ||
+                name.contains("periksa");
+          } else if (_selectedCategory == "Pick-up and Drop off") {
+            return name.contains("pick") ||
+                name.contains("drop") ||
+                name.contains("antar") ||
+                name.contains("jemput");
+          }
+          return false;
+        }).toList();
+      }
+
       return SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -54,7 +90,7 @@ class _HomeScreenState extends State<HomeScreen> {
             // Header Gradient
             Container(
               width: double.infinity,
-              padding: const EdgeInsets.fromLTRB(16, 40, 16, 30),
+              padding: const EdgeInsets.fromLTRB(16, 30, 16, 30),
               decoration: const BoxDecoration(
                 gradient: LinearGradient(
                   colors: [Color(0xFFF48FB1), Color(0xFF7E57C2)],
@@ -72,7 +108,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   Text(
                     "Hai, ${widget.userNameOrEmail}",
                     style: const TextStyle(
-                      fontSize: 20,
+                      fontSize: 16,
                       fontWeight: FontWeight.bold,
                       color: Colors.white,
                     ),
@@ -80,13 +116,13 @@ class _HomeScreenState extends State<HomeScreen> {
                   const SizedBox(height: 6),
                   const Text(
                     "Meowcome di Cozypaws!",
-                    style: TextStyle(fontSize: 16, color: Colors.white70),
+                    style: TextStyle(fontSize: 14, color: Colors.white70),
                   ),
                   const SizedBox(height: 20),
 
                   // Search bar
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    padding: const EdgeInsets.symmetric(horizontal: 12),
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(30),
@@ -99,8 +135,11 @@ class _HomeScreenState extends State<HomeScreen> {
                           child: TextField(
                             decoration: const InputDecoration(
                               hintText: "Cari layanan...",
+                              hintStyle:
+                                  TextStyle(fontSize: 12, color: Colors.grey),
                               border: InputBorder.none,
                             ),
+                            style: const TextStyle(fontSize: 12),
                             onSubmitted: (query) {
                               _searchService(context, query, services);
                             },
@@ -114,18 +153,60 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
 
             const SizedBox(height: 16),
+            
+            // Filter kategori
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  children: categories.map((category) {
+                    final bool isSelected = _selectedCategory == category;
+                    return Padding(
+                      padding: const EdgeInsets.only(right: 8),
+                      child: ChoiceChip(
+                        label: Text(
+                          category,
+                          style: TextStyle(
+                            fontSize: 11,
+                            color: isSelected ? Colors.white : Colors.purple,
+                          ),
+                        ),
+                        selected: isSelected,
+                        selectedColor: Colors.purple,
+                        backgroundColor: Colors.white,
+                        checkmarkColor: Colors.white, 
+                        shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(50),
+                        side: BorderSide(
+                          color: isSelected ? Colors.purple : Colors.purple.shade100,
+                        ),
+                      ),
+                        onSelected: (_) {
+                          setState(() {
+                            _selectedCategory = category;
+                          });
+                        },
+                      ),
+                    );
+                  }).toList(),
+                ),
+              ),
+            ),
 
-            // List layanan
+            const SizedBox(height: 12),
+
+            // List layanan utama
             ListView.builder(
               physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              itemCount: services.length,
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              itemCount: filteredServices.length,
               itemBuilder: (context, index) {
-                final service = services[index];
+                final service = filteredServices[index];
                 return Card(
                   color: Colors.white,
-                  margin: const EdgeInsets.only(bottom: 16),
+                  margin: const EdgeInsets.only(bottom: 14),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
                   ),
@@ -141,17 +222,17 @@ class _HomeScreenState extends State<HomeScreen> {
                         fit: BoxFit.cover,
                         errorBuilder: (context, error, stackTrace) =>
                             const Icon(
-                              Icons.image_not_supported,
-                              size: 40,
-                              color: Colors.grey,
-                            ),
+                          Icons.image_not_supported,
+                          size: 40,
+                          color: Colors.grey,
+                        ),
                       ),
                     ),
                     title: Text(
                       service.name,
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
-                        fontSize: 16,
+                        fontSize: 11,
                         color: Colors.purple,
                       ),
                     ),
@@ -159,21 +240,22 @@ class _HomeScreenState extends State<HomeScreen> {
                       service.description,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(fontSize: 12, color: Colors.black),
+                      style: const TextStyle(fontSize: 9, color: Colors.black),
                     ),
                     trailing: Text(
-                      "Mulai dari\n${service.getDisplayPrice()}",
+                      "Mulai dari\n${FormatUtils.rupiah(service.price)}",
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Colors.green,
-                        fontSize: 10,
+                        fontSize: 8,
                       ),
                     ),
                     onTap: () {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => DetailScreens(service: service),
+                          builder: (context) =>
+                              DetailScreens(service: service),
                         ),
                       );
                     },
@@ -181,14 +263,226 @@ class _HomeScreenState extends State<HomeScreen> {
                 );
               },
             ),
+
+            const SizedBox(height: 8),
+
+            // "Mengapa Memilih Kami"
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Center(
+                    child: Text(
+                      "Mengapa Memilih Cozypaws?",
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.purple,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 18),
+
+                  // Accordion 1
+                  Container(
+                    margin: const EdgeInsets.only(bottom: 8),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(12),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.3),
+                          spreadRadius: 1,
+                          blurRadius: 6,
+                          offset: const Offset(0, 3),
+                        ),
+                      ],
+                    ),
+                    child: GFAccordion(
+                      title: 'Tenaga Profesional & Bersertifikat',
+                      contentChild: const Text(
+                        'Setiap layanan dilakukan oleh dokter hewan dan groomer berpengalaman yang memahami kebutuhan hewan peliharaan dengan baik.',
+                        style: TextStyle(
+                          fontSize: 10,
+                          color: Colors.purple,
+                          height: 1.4,
+                        ),
+                      ),
+                      textStyle: const TextStyle(
+                        fontSize: 11,
+                        color: Colors.black,
+                      ),
+                      expandedTitleBackgroundColor: Color.fromARGB(255, 241, 222, 245),
+                      collapsedIcon: const Icon(Icons.keyboard_arrow_down, color: Colors.black),
+                      expandedIcon: const Icon(Icons.keyboard_arrow_up, color: Colors.black),
+                      titleBorderRadius: BorderRadius.circular(10),
+                      titlePadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                      contentPadding: const EdgeInsets.all(12),
+                    ),
+                  ),
+
+                  // Accordion 2
+                  Container(
+                    margin: const EdgeInsets.only(bottom: 8),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(12),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.3),
+                          spreadRadius: 1,
+                          blurRadius: 6,
+                          offset: const Offset(0, 3),
+                        ),
+                      ],
+                    ),
+                    child: GFAccordion(
+                      title: 'Fasilitas Bersih & Nyaman',
+                      contentChild: const Text(
+                        'Cozypaws menyediakan ruang perawatan ber-AC, area bermain yang aman, dan peralatan steril untuk menjaga kesehatan hewan.',
+                        style: TextStyle(
+                          fontSize: 10,
+                          color: Colors.purple,
+                          height: 1.4,
+                        ),
+                      ),
+                      textStyle: const TextStyle(
+                        fontSize: 11,
+                        color: Colors.black,
+                      ),
+                      expandedTitleBackgroundColor: Color.fromARGB(255, 241, 222, 245),
+                      collapsedIcon: const Icon(Icons.keyboard_arrow_down, color: Colors.black),
+                      expandedIcon: const Icon(Icons.keyboard_arrow_up, color: Colors.black),
+                      titleBorderRadius: BorderRadius.circular(10),
+                      titlePadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                      contentPadding: const EdgeInsets.all(12),
+                    ),
+                  ),
+
+                  // Accordion 3
+                  Container(
+                    margin: const EdgeInsets.only(bottom: 8),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(12),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.3),
+                          spreadRadius: 1,
+                          blurRadius: 6,
+                          offset: const Offset(0, 3),
+                        ),
+                      ],
+                    ),
+                    child: GFAccordion(
+                      title: 'Layanan Lengkap dalam Satu Tempat',
+                      contentChild: const Text(
+                        'Dari grooming, boarding, hingga vaksinasi — semua kebutuhan hewan peliharaan tersedia di satu tempat.',
+                        style: TextStyle(
+                          fontSize: 10,
+                          color: Colors.purple,
+                          height: 1.4,
+                        ),
+                      ),
+                      textStyle: const TextStyle(
+                        fontSize: 11,
+                        color: Colors.black,
+                      ),
+                      expandedTitleBackgroundColor: Color.fromARGB(255, 241, 222, 245),
+                      collapsedIcon: const Icon(Icons.keyboard_arrow_down, color: Colors.black),
+                      expandedIcon: const Icon(Icons.keyboard_arrow_up, color: Colors.black),
+                      titleBorderRadius: BorderRadius.circular(10),
+                      titlePadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                      contentPadding: const EdgeInsets.all(12),
+                    ),
+                  ),
+
+                  // Accordion 4
+                  Container(
+                    margin: const EdgeInsets.only(bottom: 8),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(12),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.3),
+                          spreadRadius: 1,
+                          blurRadius: 6,
+                          offset: const Offset(0, 3),
+                        ),
+                      ],
+                    ),
+                    child: GFAccordion(
+                      title: 'Pelayanan Ramah & Cepat Tanggap',
+                      contentChild: const Text(
+                        'Cozypaws siap membantu dengan pelayanan cepat dan ramah agar pawrent merasa tenang.',
+                        style: TextStyle(
+                          fontSize: 10,
+                          color: Colors.purple,
+                          height: 1.4,
+                        ),
+                      ),
+                      textStyle: const TextStyle(
+                        fontSize: 11,
+                        color: Colors.black,
+                      ),
+                      expandedTitleBackgroundColor: Color.fromARGB(255, 241, 222, 245),
+                      collapsedIcon: const Icon(Icons.keyboard_arrow_down, color: Colors.black),
+                      expandedIcon: const Icon(Icons.keyboard_arrow_up, color: Colors.black),
+                      titleBorderRadius: BorderRadius.circular(10),
+                      titlePadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                      contentPadding: const EdgeInsets.all(12),
+                    ),
+                  ),
+
+                  // Accordion 5
+                  Container(
+                    margin: const EdgeInsets.only(bottom: 8),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(12),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.3),
+                          spreadRadius: 1,
+                          blurRadius: 6,
+                          offset: const Offset(0, 3),
+                        ),
+                      ],
+                    ),
+                    child: GFAccordion(
+                      title: 'Layanan Antar-Jemput',
+                      contentChild: const Text(
+                        'Cozypaws menawarkan layanan antar-jemput untuk mempermudah pawrent melakukan perawatan tanpa harus datang ke lokasi.',
+                        style: TextStyle(
+                          fontSize: 10,
+                          color: Colors.purple,
+                          height: 1.4,
+                        ),
+                      ),
+                      textStyle: const TextStyle(
+                        fontSize: 11,
+                        color: Colors.black,
+                      ),
+                      expandedTitleBackgroundColor: Color.fromARGB(255, 241, 222, 245),
+                      collapsedIcon: const Icon(Icons.keyboard_arrow_down, color: Colors.black),
+                      expandedIcon: const Icon(Icons.keyboard_arrow_up, color: Colors.black),
+                      titleBorderRadius: BorderRadius.circular(10),
+                      titlePadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                      contentPadding: const EdgeInsets.all(12),
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
       );
     } else if (index == 1) {
       return const ServiceScreen();
     } else {
-      // Tampilkan ProfileScreen
-      return ProfileScreen(email: widget.userNameOrEmail);
+      return const ProfileScreen();
     }
   }
 
@@ -213,7 +507,7 @@ class _HomeScreenState extends State<HomeScreen> {
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
           BottomNavigationBarItem(icon: Icon(Icons.pets), label: "Service"),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: "Account"),
+          BottomNavigationBarItem(icon: Icon(Icons.person), label: "Profile"),
         ],
       ),
     );

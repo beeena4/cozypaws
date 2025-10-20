@@ -76,17 +76,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
             ),
           ),
 
-          // Tombol Back
-          SafeArea(
-            child: Padding(
-              padding: const EdgeInsets.only(top: 12, left: 8),
-              child: IconButton(
-                onPressed: () => Navigator.pop(context),
-                icon: const Icon(Icons.arrow_back, color: Colors.white),
-              ),
-            ),
-          ),
-
           // Form
           Center(
             child: SingleChildScrollView(
@@ -113,7 +102,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         "Your cat’s cozy world \n starts here",
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                          fontSize: 20,
+                          fontSize: 18,
                           fontWeight: FontWeight.bold,
                           color: Color.fromARGB(135, 31, 0, 39),
                         ),
@@ -123,8 +112,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       // Username
                       TextFormField(
                         controller: usernameController,
+                        style: const TextStyle(fontSize: 12),
                         decoration: InputDecoration(
                           hintText: "Username",
+                          hintStyle: const TextStyle(fontSize: 12),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(12),
                           ),
@@ -144,8 +135,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       // Email
                       TextFormField(
                         controller: emailController,
+                        style: const TextStyle(fontSize: 12),
                         decoration: InputDecoration(
                           hintText: "Email",
+                          hintStyle: const TextStyle(fontSize: 12),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(12),
                           ),
@@ -168,8 +161,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       TextFormField(
                         controller: passwordController,
                         obscureText: _obscurePassword,
+                        style: const TextStyle(fontSize: 12),
                         decoration: InputDecoration(
                           hintText: "Password",
+                          hintStyle: const TextStyle(fontSize: 12),
                           suffixIcon: IconButton(
                             icon: Icon(
                               _obscurePassword
@@ -202,8 +197,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       TextFormField(
                         controller: confirmPasswordController,
                         obscureText: _obscureConfirmPassword,
+                        style: const TextStyle(fontSize: 12),
                         decoration: InputDecoration(
                           hintText: "Konfirmasi Password",
+                          hintStyle: const TextStyle(fontSize: 12),
                           suffixIcon: IconButton(
                             icon: Icon(
                               _obscureConfirmPassword
@@ -248,7 +245,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(30),
                             ),
-                            padding: const EdgeInsets.symmetric(vertical: 16),
+                            padding: const EdgeInsets.symmetric(vertical: 12),
                           ),
                           onPressed: _isLoading ? null : _signUp,
                           child: _isLoading
@@ -258,20 +255,25 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               : const Text(
                                   "Sign Up",
                                   style: TextStyle(
-                                    fontSize: 18,
+                                    fontSize: 14,
                                     fontWeight: FontWeight.bold,
                                     color: Colors.white,
                                   ),
                                 ),
                         ),
                       ),
-                      const SizedBox(height: 16),
+                      const SizedBox(height: 6),
 
                       // Sudah punya akun? Login
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const Text("Sudah punya akun?"),
+                          const Text(
+                            "Sudah punya akun?",
+                            style: TextStyle(
+                              fontSize: 12,
+                            ),
+                          ),
                           TextButton(
                             onPressed: () {
                               Navigator.pushReplacement(
@@ -283,8 +285,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             child: const Text(
                               "Login",
                               style: TextStyle(
+                                fontSize: 12,
                                 fontWeight: FontWeight.bold,
-                                color: Color.fromARGB(255, 139, 57, 247),),
+                                color: Colors.deepPurple,
+                              ),
                             ),
                           ),
                         ],
