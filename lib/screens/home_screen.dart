@@ -215,7 +215,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     contentPadding: const EdgeInsets.all(12),
                     leading: ClipRRect(
                       borderRadius: BorderRadius.circular(8),
-                      child: Image.network(
+                      child: Image.asset(
                         service.imageUrl,
                         width: 100,
                         height: 100,
