@@ -115,7 +115,7 @@ class ServiceScreen extends StatelessWidget {
                           const SizedBox(height: 6),
                           
                           Container(
-                          height: 30, 
+                          height: 26, 
                           decoration: BoxDecoration(
                             gradient: const LinearGradient(
                               colors: [Color(0xFFF48FB1), Color(0xFF7E57C2)],

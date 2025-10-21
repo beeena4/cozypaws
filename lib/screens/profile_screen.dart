@@ -27,7 +27,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     super.initState();
     _loadCurrentUser();
     _loadOrders();
-    _loadRating(); // <- load rating dari SharedPreferences
+    _loadRating(); 
   }
 
   @override
